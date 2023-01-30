@@ -3,32 +3,32 @@ package com.carla.os.domain;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import com.carla.os.domain.enuns.Prioridade;
-import ch.qos.logback.core.status.Status;
+import com.carla.os.domain.enuns.Status;
 
 public class OS {
 	private Integer id;
 	private LocalDateTime dataAbertura;
 	private LocalDateTime dataFechamento;
-	private Prioridade prioridade;
+	private Integer prioridade;
 	private String observacoes;
-	private Status status;
+	private Integer status;
 	private Tecnico tecnico;
 	private Cliente cliente;
-	
+
 	public OS() {
 		super();
-		// TODO Auto-generated constructor stub
+		this.setDataAbertura(LocalDateTime.now());
+		this.setPrioridade(Prioridade.BAIXA);
+		this.setStatus(Status.ABERTO);
 	}
 
-	public OS(Integer id, LocalDateTime dataAbertura, LocalDateTime dataFechamento, Prioridade prioridade,
-			String observacoes, Status status, Tecnico tecnico, Cliente cliente) {
+	public OS(Integer id, Prioridade prioridade, String observacoes, Status status, Tecnico tecnico, Cliente cliente) {
 		super();
 		this.id = id;
-		this.dataAbertura = dataAbertura;
-		this.dataFechamento = dataFechamento;
-		this.prioridade = prioridade;
+		this.setDataAbertura(LocalDateTime.now());
+		this.prioridade = (prioridade == null) ? 0 : prioridade.getCod();
 		this.observacoes = observacoes;
-		this.status = status;
+		this.status = (status == null) ? 0 : status.getCod();
 		this.tecnico = tecnico;
 		this.cliente = cliente;
 	}
@@ -58,11 +58,11 @@ public class OS {
 	}
 
 	public Prioridade getPrioridade() {
-		return prioridade;
+		return Prioridade.toEnum(this.prioridade);
 	}
 
 	public void setPrioridade(Prioridade prioridade) {
-		this.prioridade = prioridade;
+		this.prioridade = prioridade.getCod();
 	}
 
 	public String getObservacoes() {
@@ -74,11 +74,11 @@ public class OS {
 	}
 
 	public Status getStatus() {
-		return status;
+		return Status.toEnum(this.status);
 	}
 
 	public void setStatus(Status status) {
-		this.status = status;
+		this.status = status.getCod();
 	}
 
 	public Tecnico getTecnico() {
@@ -113,6 +113,5 @@ public class OS {
 		OS other = (OS) obj;
 		return Objects.equals(id, other.id);
 	}
-	
-	
+
 }

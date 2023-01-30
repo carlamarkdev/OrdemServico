@@ -26,14 +26,14 @@ public enum Prioridade {
 			return null;
 
 		}
-		
-		for (Prioridade x: Prioridade.values()) {
-			if(cod.equals(x.getCod())) {
+
+		for (Prioridade x : Prioridade.values()) {
+			if (cod.equals(x.getCod())) {
 				return x;
 			}
 		}
-		
-		throw new IllegalArgumentException("Prioridade Inválida!"+cod);
+
+		throw new IllegalArgumentException("Prioridade Inválida!" + cod);
 	}
 
 }
