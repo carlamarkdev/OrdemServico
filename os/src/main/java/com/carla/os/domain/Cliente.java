@@ -1,5 +1,6 @@
 package com.carla.os.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Cliente extends Pessoa {
+public class Cliente extends Pessoa implements Serializable {
+	private static final long serialVersionUID = 1L;
 	
 	@OneToMany(mappedBy = "cliente")
 	private List<OS> list = new ArrayList<>();
