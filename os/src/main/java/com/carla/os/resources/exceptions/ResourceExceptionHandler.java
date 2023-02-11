@@ -6,14 +6,23 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.carla.os.services.exeptions.ObjectNotFoundException;
+import com.carla.os.services.exeptions.DataIntegratyViolationException;
 
 @ControllerAdvice
 public class ResourceExceptionHandler {
 
 	@ExceptionHandler(ObjectNotFoundException.class)
-	public ResponseEntity<StandardError> objectNotFoundException(ObjectNotFoundException e){
-		StandardError error = new StandardError(System.currentTimeMillis(),HttpStatus.NOT_FOUND.value(),e.getMessage());
+	public ResponseEntity<StandardError> objectNotFoundException(ObjectNotFoundException e) {
+		StandardError error = new StandardError(System.currentTimeMillis(), HttpStatus.NOT_FOUND.value(),
+				e.getMessage());
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+	}
+
+	@ExceptionHandler(DataIntegratyViolationException.class)
+	public ResponseEntity<StandardError> DataIntegratyViolationException(DataIntegratyViolationException e) {
+		StandardError error = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(),
+				e.getMessage());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
 	}
 
 }
