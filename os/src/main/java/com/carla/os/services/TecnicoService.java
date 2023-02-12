@@ -3,6 +3,8 @@ package com.carla.os.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,9 +35,22 @@ public class TecnicoService {
 		if (findByCPF(objDTO) != null) {
 			throw new DataIntegratyViolationException("CPF Já cadastrado na base de dados!");
 		}
-		
-		
+
 		return repository.save(new Tecnico(null, objDTO.getNome(), objDTO.getCpf(), objDTO.getTelefone()));
+
+	}
+
+	public Tecnico update(Integer id, @Valid TecnicoDTO objDTO) {
+		Tecnico oldObj = findById(id);
+
+		if (findByCPF(objDTO) != null && findByCPF(objDTO).getId() != id) {
+			throw new DataIntegratyViolationException("CPF Já cadastrado na base de dados!");
+		}
+
+		oldObj.setNome(objDTO.getNome());
+		oldObj.setCpf(objDTO.getCpf());
+		oldObj.setTelefone(objDTO.getTelefone());
+		return repository.save(oldObj);
 
 	}
 
